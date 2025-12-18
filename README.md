@@ -1,16 +1,28 @@
+### PR #4: Advanced Hook (Custom Data Grid State Hook)
+
+For your final task, you will design and implement a reusable custom React hook for data grid state management.
+
+1. **Create a Branch:** From your `main` branch, create a new branch. We suggest `feature/datagrid-hook`.
+2. **Build the Hook:** Read the ticket `TODO-HOOK-DATAGRID.md` for the full requirements.
+3. **Open the PR:**
+    *   Open a new pull request from `feature/datagrid-hook` to your `main` branch.
+    *   Use the PR description template below.
+    *   **Leave this pull request open** for us to review.
 # Welcome, Future Teammate!
 
 Hey there! Thanks for taking the time to do this exercise. We've designed it to be a fun and challenging way to get a feel for the kind of work we do here. It's a chance for you to showcase your skills as a builder, problem-solver, and mentor across the full stack.
 
+
 This isn't a typical coding test with a single right answer. We're much more interested in your thought process, how you handle trade-offs, and your ability to navigate a pre-existing (and slightly imperfect) codebase using a realistic Git workflow.
 
-**A Quick Note on Time:** Timebox the exercise up to **a maximum of 4 hours**. We've intentionally included more work than can be done in that time. **Please do what you can but follow the order.** Prioritization is a key skill, and we want to see how you approach a task with real-world time constraints.
+**A Quick Note on Time:** Timebox the exercise up to **a maximum of 4 hours**. We've intentionally included more work than can be done in that time. **Please do what you can but follow the order.** Prioritization is a key skill, and we want to see how you approach a task with real-world time constraints. All tasks are focused on frontend React development.
 
 ## The Scenario: A FinTech Transaction Dashboard
 
 You've just joined a new team building a dashboard for visualizing financial transactions. The application is composed of a backend and a React frontend. Your mission is to get familiar with the codebase, review a teammate's contribution, fix some underlying issues, and then build out a new feature.
 
 ---
+
 
 ## Your Mission: A Four-PR Workflow
 
@@ -25,13 +37,23 @@ Your work will be organized into four separate pull requests within your own rep
 ### A Quick Glossary of Branches
 
 *   **`main`**: The initial state of the codebase. You will branch from here.
-*   **`fix-bug-666`**: A simulated PR from a junior developer. This branch contains their work for you to review.
-*   **`fix/haunted-codebase`**: The branch you will create from `main` to fix the existing technical debt.
-*   **`feature/transaction-tags-grid`**: The branch you will create from `fix/haunted-codebase` for the new feature (database migration and data grid).
-*   **`ci/github-actions`**: The branch you will create from `main` to implement the CI/CD pipeline.
+*   **`fix-bug-666`**: A simulated PR from a junior developer. This branch contains their work for you to review (transaction filter).
+*   **`fix/haunted-codebase`**: The branch you will create from `main` to fix the existing technical debt (React re-render performance).
+*   **`feature/transaction-tags-grid`**: The branch you will create from `fix/haunted-codebase` for the new feature (transaction tags & grid).
+*   **`feature/datagrid-hook`**: The branch you will create from `main` to implement the custom data grid state hook.
 
+---
 
-### Step 0: Getting Up and Running
+## The Four Tasks
+
+Each task is described in a markdown file in the repo. Please follow the order below:
+
+1. **Code Review:** Review a junior developer's PR for the transaction filter (see `TODO-BUG-666.md`).
+2. **Technical Debt Fix:** Diagnose and fix unnecessary React component re-renders (see `TODO-FIX-TECH-DEBT.md`).
+3. **New Feature:** Build a new transaction grid with tags, server-side sorting, and pagination (see `TODO-TAG-FEATURE.md`).
+4. **Advanced Hook:** Create a reusable custom hook for data grid state management (see `TODO-HOOK-DATAGRID.md`).
+
+---
 
 1.  **Clone Your Fork:** Clone your newly forked repository to your local machine.
 2.  **Choose Your Development Environment:** Pick one of the two options below.
@@ -133,28 +155,15 @@ With the codebase stabilized, you can now build the new feature. This PR will be
     *   Use the PR description template below. In your description, please explicitly mention that this PR builds on `fix/haunted-codebase` and link to PR #2.
     *   **Leave this pull request open** for us to review.
 
-### PR #4: CI/CD Pipeline
-
-Now that you have working features, let's automate our quality checks.
-
-1.  **Create a Branch:** From your `main` branch, create a new branch. We suggest `ci/github-actions`.
-2.  **Implement CI:** Read the ticket `TODO-CI-CD.md` for the full requirements.
-3.  **Open the PR:**
-    *   Open a new pull request from `ci/github-actions` to your `main` branch.
-    *   Use the PR description template below.
-    *   Verify that GitHub Actions runs automatically on your PR and shows the results.
-    *   **Leave this pull request open** for us to review.
-
----
 
 ## The Deliverable
 
 The final deliverable is **a link to your forked repository.** When you submit it, we expect to see the following:
 
 *   **PR #1 (Code Review):** An **open** (but not merged) pull request from `fix-bug-666` to `main`, containing your review comments.
-*   **PR #2 (Bug Fixes):** An **open** pull request from `fix/haunted-codebase` to `main`, containing the fixes.
-*   **PR #3 (New Feature):** An **open** pull request from `feature/transaction-tags-grid` to `main`, containing the database migration and the new data grid feature. This PR will implicitly include the commits from PR #2 as its base.
-*   **PR #4 (CI/CD):** An **open** pull request from `ci/github-actions` to `main`, containing the GitHub Actions workflow. The Actions tab should show the workflow running successfully.
+*   **PR #2 (Technical Debt Fix):** An **open** pull request from `fix/haunted-codebase` to `main`, containing your React performance improvements.
+*   **PR #3 (New Feature):** An **open** pull request from `feature/transaction-tags-grid` to `main`, containing your new transaction grid and tags feature. This PR will implicitly include the commits from PR #2 as its base.
+*   **PR #4 (Advanced Hook):** An **open** pull request from `feature/datagrid-hook` to `main`, containing your custom data grid state hook implementation.
 
 ### PR Description Template for PRs
 
@@ -171,7 +180,7 @@ For PRs #2, #3, and #4, please use this template:
 (Clear instructions on how to test the changes in this PR.)
 
 ### Architectural Decision Record (ADR)
-(A short explanation of significant decisions. For PR #3, this should cover the DB migration and state management.)
+(A short explanation of significant decisions. For PR #3, this should cover state management and grid architecture.)
 
 ### AI Usage Summary
 (A high-level summary of how you used AI tools.)
