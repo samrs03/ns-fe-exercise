@@ -1,13 +1,3 @@
-### PR #4: Advanced Hook (Custom Data Grid State Hook)
-
-For your final task, you will design and implement a reusable custom React hook for data grid state management.
-
-1. **Create a Branch:** From your `main` branch, create a new branch. We suggest `feature/datagrid-hook`.
-2. **Build the Hook:** Read the ticket `TODO-HOOK-DATAGRID.md` for the full requirements.
-3. **Open the PR:**
-    *   Open a new pull request from `feature/datagrid-hook` to your `main` branch.
-    *   Use the PR description template below.
-    *   **Leave this pull request open** for us to review.
 # Welcome, Future Teammate!
 
 Hey there! Thanks for taking the time to do this exercise. We've designed it to be a fun and challenging way to get a feel for the kind of work we do here. It's a chance for you to showcase your skills as a builder, problem-solver, and mentor across the full stack.
@@ -155,6 +145,16 @@ With the codebase stabilized, you can now build the new feature. This PR will be
     *   Use the PR description template below. In your description, please explicitly mention that this PR builds on `fix/haunted-codebase` and link to PR #2.
     *   **Leave this pull request open** for us to review.
 
+### PR #4: Advanced Hook (Custom Data Grid State Hook)
+
+For your final task, you will design and implement a reusable custom React hook for data grid state management.
+
+1. **Create a Branch:** From your `main` branch, create a new branch. We suggest `feature/datagrid-hook`.
+2. **Build the Hook:** Read the ticket `TODO-HOOK-DATAGRID.md` for the full requirements.
+3. **Open the PR:**
+    *   Open a new pull request from `feature/datagrid-hook` to your `main` branch.
+    *   Use the PR description template below.
+    *   **Leave this pull request open** for us to review.
 
 ## The Deliverable
 
