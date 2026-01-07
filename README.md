@@ -27,7 +27,7 @@ Your work will be organized into four separate pull requests within your own rep
 ### A Quick Glossary of Branches
 
 *   **`main`**: The initial state of the codebase. You will branch from here.
-*   **`fix-bug-666`**: A simulated PR from a junior developer. This branch contains their work for you to review (transaction filter).
+*   **`fix-bug-666`**: Create this branch to add the missing feature.
 *   **`fix/haunted-codebase`**: The branch you will create from `main` to fix the existing technical debt (React re-render performance).
 *   **`feature/transaction-tags-grid`**: The branch you will create from `fix/haunted-codebase` for the new feature (transaction tags & grid).
 *   **`feature/datagrid-hook`**: The branch you will create from `main` to implement the custom data grid state hook.
@@ -38,7 +38,7 @@ Your work will be organized into four separate pull requests within your own rep
 
 Each task is described in a markdown file in the repo. Please follow the order below:
 
-1. **Code Review:** Review a junior developer's PR for the transaction filter (see `TODO-BUG-666.md`).
+1. **Add Feature:** Add a missing feature (see `TODO-BUG-666.md`).
 2. **Technical Debt Fix:** Diagnose and fix unnecessary React component re-renders (see `TODO-FIX-TECH-DEBT.md`).
 3. **New Feature:** Build a new transaction grid with tags, server-side sorting, and pagination (see `TODO-TAG-FEATURE.md`).
 4. **Advanced Hook:** Create a reusable custom hook for data grid state management (see `TODO-HOOK-DATAGRID.md`).
@@ -92,15 +92,18 @@ This will execute the backend tests (unit, integration, E2E) and the frontend Pl
 
 **Note:** Both `run-tests.sh` and `run.sh` automatically clean up Docker containers and volumes when they start and when you stop them (Ctrl+C), ensuring a clean state. You can also run linting with `./run-lint.sh`.
 
-### PR #1: The Code Review
+### PR #1: Add Missing Feature
 
 Your first task is to act as a mentor and review a "PR" from a junior developer.
 
-1.  **Understand the Context:** The junior dev's work is on the `fix-bug-666` branch. On that branch, read the `TODO-BUG-666.md` file to understand the original problem.
-2.  **Open the PR:** In your own repository, open a pull request from `fix-bug-666` to your `main` branch. Use the PR description template below.
-3.  **Perform the Review:** Go to the "Files Changed" tab of the PR you just created. Leave comments directly on the code, providing a mix of high-level architectural feedback and specific line-by-line notes.
-4.  **Abandon the PR:** Once your review is complete, **leave the pull request open but do not merge it.** This will allow us to see your review comments.
-
+1.  **Understand the Context:** Read the `TODO-BUG-666.md` file to understand the original problem.
+2.  **Create a Branch:** Create a branch, `fix-bug-666` from your `main` branch. Use the PR description template below.
+2.  **Add the Feature:** Implement the missing feature as described in the `TODO-BUG-666.md` file.
+3.  **Open the PR:**
+    *   Open a new pull request in your repository from `fix-bug-666` to `main`.
+    *   Use the PR description template below.
+    *   **Leave this pull request open** for us to review.
+   
 #### PR #1 Description Template
 ```md
 ### What I Did
@@ -160,7 +163,7 @@ For your final task, you will design and implement a reusable custom React hook 
 
 The final deliverable is **a link to your forked repository.** When you submit it, we expect to see the following:
 
-*   **PR #1 (Code Review):** An **open** (but not merged) pull request from `fix-bug-666` to `main`, containing your review comments.
+*   **PR #1 (Missing Feature):** An **open** (but not merged) pull request from `fix-bug-666` to `main`, containing your implementation of the missing feature.
 *   **PR #2 (Technical Debt Fix):** An **open** pull request from `fix/haunted-codebase` to `main`, containing your React performance improvements.
 *   **PR #3 (New Feature):** An **open** pull request from `feature/transaction-tags-grid` to `main`, containing your new transaction grid and tags feature. This PR will implicitly include the commits from PR #2 as its base.
 *   **PR #4 (Advanced Hook):** An **open** pull request from `feature/datagrid-hook` to `main`, containing your custom data grid state hook implementation.
