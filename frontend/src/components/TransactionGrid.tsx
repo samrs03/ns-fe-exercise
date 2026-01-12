@@ -26,58 +26,55 @@ interface TransactionGridResponse {
   total: number;
 }
 
-const dummyData: TransactionGridItem[] = [
-  {
-    id: 1,
-    description: 'Salary deposit',
-    amount: 3500.0,
-    type: 'credit',
-    category: { id: 1, name: 'Income' },
-    user_id: 1,
-    date: '2025-01-10',
-    tags: [
-      { id: 1, name: 'Monthly' },
-      { id: 2, name: 'Recurring' },
-    ],
-  },
-  {
-    id: 2,
-    description: 'Grocery shopping',
-    amount: 150.25,
-    type: 'debit',
-    category: { id: 2, name: 'Food' },
-    user_id: 1,
-    date: '2025-01-09',
-    tags: [{ id: 3, name: 'Essential' }],
-  },
-  {
-    id: 3,
-    description: 'Freelance payment',
-    amount: 800.0,
-    type: 'credit',
-    category: { id: 1, name: 'Income' },
-    user_id: 1,
-    date: '2025-01-08',
-    tags: [],
-  },
-];
-
 const TransactionGrid: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionGridItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [total, setTotal] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<string>('date');
+  const [sortOrder, setSortOrder] = useState<string>('desc');
+  const [page, setPage] = useState<number>(1);
+  const [pageSize] = useState<number>(10);
+
+  const totalPages = Math.ceil(total / pageSize);
+  const canGoPrevious = page > 1;
+  const canGoNext = page < totalPages;
+
+  const handleSort = (column: string) => {
+    if (sortBy === column) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(column);
+      setSortOrder('desc');
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (canGoPrevious) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (canGoNext) {
+      setPage(page + 1);
+    }
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         setLoading(true);
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const response = await fetch(`${backendUrl}/api/v1/transactions/grid`);
+        const response = await fetch(
+          `${backendUrl}/api/v1/transactions/grid?page=${page}&size=${pageSize}&sort_by=${sortBy}&sort_order=${sortOrder}`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: TransactionGridResponse = await response.json();
         setTransactions(data.items);
+        setTotal(data.total);
       } catch (e: unknown) {
         setError(e instanceof Error ? e.message : 'An error occurred');
       } finally {
@@ -86,7 +83,7 @@ const TransactionGrid: React.FC = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, [sortBy, sortOrder, page, pageSize]);
 
   if (loading) {
     return <div className="text-gray-700">Loading transactions...</div>;
@@ -109,7 +106,9 @@ const TransactionGrid: React.FC = () => {
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Date
+                <button onClick={() => handleSort('date')} className="w-full hover:text-gray-700">
+                  Date {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
+                </button>
               </th>
               <th
                 scope="col"
@@ -121,7 +120,9 @@ const TransactionGrid: React.FC = () => {
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Amount
+                <button onClick={() => handleSort('amount')} className="w-full hover:text-gray-700">
+                  Amount {sortBy === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
+                </button>
               </th>
               <th
                 scope="col"
@@ -175,6 +176,36 @@ const TransactionGrid: React.FC = () => {
             )}
           </tbody>
         </table>
+      </div>
+      <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200 bg-white">
+        <div className="text-sm text-gray-500">
+          Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, total)} of {total}{' '}
+          results
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={handlePreviousPage}
+            disabled={!canGoPrevious}
+            className={`px-3 py-1.5 text-xs font-medium rounded border ${
+              canGoPrevious
+                ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={!canGoNext}
+            className={`px-3 py-1.5 text-xs font-medium rounded border ${
+              canGoNext
+                ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
