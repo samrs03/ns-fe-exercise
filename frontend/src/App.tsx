@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header';
 import TransactionList from './components/TransactionList';
+import TransactionGrid from './components/TransactionGrid';
 
 function App() {
   const [userActivityCount, setUserActivityCount] = useState(0);
@@ -17,7 +18,7 @@ function App() {
       <main className="flex-grow container mx-auto p-4">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">FinTech Dashboard</h1>
         <p className="text-gray-600">User Activity: {userActivityCount}</p>
-        <TransactionList />
+        <TransactionGrid />
       </main>
     </div>
   );
