@@ -119,7 +119,11 @@ const TransactionGrid: React.FC = () => {
                 }
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <button onClick={() => handleSort('date')} className="w-full hover:text-gray-700">
+                <button
+                  onClick={() => handleSort('date')}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSort('date')}
+                  className="w-full hover:text-gray-700"
+                >
                   Date {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </button>
               </th>
@@ -136,7 +140,11 @@ const TransactionGrid: React.FC = () => {
                 }
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <button onClick={() => handleSort('amount')} className="w-full hover:text-gray-700">
+                <button
+                  onClick={() => handleSort('amount')}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSort('amount')}
+                  className="w-full hover:text-gray-700"
+                >
                   Amount {sortBy === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </button>
               </th>
@@ -202,8 +210,9 @@ const TransactionGrid: React.FC = () => {
           <div className="flex gap-2">
             <button
               onClick={handlePreviousPage}
-              aria-label="Go to previous page"
+              onKeyDown={(e) => e.key === 'Enter' && handlePreviousPage()}
               disabled={!canGoPrevious}
+              aria-label="Go to previous page"
               className={`px-3 py-1.5 text-xs font-medium rounded border ${
                 canGoPrevious
                   ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
@@ -212,10 +221,12 @@ const TransactionGrid: React.FC = () => {
             >
               Previous
             </button>
+
             <button
               onClick={handleNextPage}
-              aria-label="Go to next page"
+              onKeyDown={(e) => e.key === 'Enter' && handleNextPage()}
               disabled={!canGoNext}
+              aria-label="Go to next page"
               className={`px-3 py-1.5 text-xs font-medium rounded border ${
                 canGoNext
                   ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
