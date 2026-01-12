@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Tag {
   id: number;
@@ -19,6 +19,11 @@ interface TransactionGridItem {
   user_id: number;
   date: string;
   tags: Tag[];
+}
+
+interface TransactionGridResponse {
+  items: TransactionGridItem[];
+  total: number;
 }
 
 const dummyData: TransactionGridItem[] = [
@@ -58,6 +63,39 @@ const dummyData: TransactionGridItem[] = [
 ];
 
 const TransactionGrid: React.FC = () => {
+  const [transactions, setTransactions] = useState<TransactionGridItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true);
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/v1/transactions/grid`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: TransactionGridResponse = await response.json();
+        setTransactions(data.items);
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  if (loading) {
+    return <div className="text-gray-700">Loading transactions...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg mt-8">
       <div className="px-4 py-5 sm:px-6 text-left">
@@ -100,7 +138,7 @@ const TransactionGrid: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {dummyData.map((transaction, index) => (
+            {transactions.map((transaction, index) => (
               <tr key={transaction.id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                   {new Date(transaction.date).toLocaleDateString()}
@@ -109,7 +147,7 @@ const TransactionGrid: React.FC = () => {
                   {transaction.description}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">
-                  ${transaction.amount.toFixed(2)}
+                  ${transaction.amount}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                   {transaction.category.name}
@@ -128,6 +166,13 @@ const TransactionGrid: React.FC = () => {
                 </td>
               </tr>
             ))}
+            {transactions.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                  No transactions found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
