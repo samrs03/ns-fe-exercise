@@ -1,194 +1,20 @@
-# Welcome, Future Teammate!
+# Welcome to almost done exercise done by me, Future Teammate!
 
-Hey there! Thanks for taking the time to do this exercise. We've designed it to be a fun and challenging way to get a feel for the kind of work we do here. It's a chance for you to showcase your skills as a builder, problem-solver, and mentor across the full stack.
+I appreciate the opportunity to develop this challenge, I found it really interesting in the sense that I really felt tested from the point of view on how I work, I would deliver, how I would help teach others, how would I document, how I can prove my trade-off analysis skilss. I hope you guys enjoy reviewin this as much as I enjoyed developing. 
+
+# Thoughts
+
+I just wanted to briefly leave some comments here on how I tackle it and what I found
+
+- I had trouble trying to serve the Docker container with VS Code. I was looking at the errors and somehow a variable (ID i think it was ) was not correctly passed down, so I decided to run the ./run.sh file in my terminal directly, it worked after that.
+- I started all challenges by trying to stick to the requirements as much as possible but to make sure time could help me ( even though you stated it might not be possible, I always looked for it to be possible ). I started by reading evrything making sure I understood the most part of the whole idea.
+- When fixing the filter, or adding it, I thought that since API is not configured/written to receive parameters in that endpoint I might as well do it in the frontend, showcasing how I would takle the exercise rapidly and with order. Bottom line is, I would do it from the backend, making sure I only send the filter parameter so i receive a filtered resposne. However, i did it in the frontend, noting this is not scalable and it doesnt justify to add load to the customers interaction
+- Fixing the render issue proved to be quickly, I saw that our component was render again because its parent execute a render, memoizing made sure that rendering again would only happen in the case data from that component changed. I also saw that in ever render the APP component was passing a new function to Header, so i used useCallback to make sure it was not calculated again, we didn't have any more renderse
+- For the 3rd exercise I tried to eat the ( we say it this way in spanish ) elephant by pieces. I tried to start by a static render, simple api call, and building on top of that for sorting and pagination. I used the several local variables to manage that state, it proved to be a little bit time costing since I wanted to have a really good component
+- For the 4th exercise I didn't have much time, I will though create later commits, if you're interested in looking at them after 1:10PM ET
 
 
-This isn't a typical coding test with a single right answer. We're much more interested in your thought process, how you handle trade-offs, and your ability to navigate a pre-existing (and slightly imperfect) codebase using a realistic Git workflow.
-
-**A Quick Note on Time:** Timebox the exercise up to **a maximum of 4 hours**. We've intentionally included more work than can be done in that time. **Please do what you can but follow the order.** Prioritization is a key skill, and we want to see how you approach a task with real-world time constraints. All tasks are focused on frontend React development.
-
-## The Scenario: A FinTech Transaction Dashboard
-
-You've just joined a new team building a dashboard for visualizing financial transactions. The application is composed of a backend and a React frontend. Your mission is to get familiar with the codebase, review a teammate's contribution, fix some underlying issues, and then build out a new feature.
-
----
+I appreciate the feedback, I would love to hear your thoughts and I expect to continue talking to you guys and going to next step
 
 
-## Your Mission: A Four-PR Workflow
-
-**Important First Step:** Before you begin, please **fork this repository** (Make sure you fork all the branches, you will need them).
-
-**Next, unlink your fork immediately:** Go to your forked repository on GitHub, in the **Settings** section find and action the "Leave fork network" button.
-
-You will work entirely on your own repository, creating pull requests within it. **Do not create any pull requests to the original upstream repository.**
-
-Your work will be organized into four separate pull requests within your own repository. We recommend following these steps in order.
-
-### A Quick Glossary of Branches
-
-*   **`main`**: The initial state of the codebase. You will branch from here.
-*   **`fix-bug-666`**: Create this branch to add the missing feature.
-*   **`fix/haunted-codebase`**: The branch you will create from `main` to fix the existing technical debt (React re-render performance).
-*   **`feature/transaction-tags-grid`**: The branch you will create from `fix/haunted-codebase` for the new feature (transaction tags & grid).
-*   **`feature/datagrid-hook`**: The branch you will create from `main` to implement the custom data grid state hook.
-
----
-
-## The Four Tasks
-
-Each task is described in a markdown file in the repo. Please follow the order below:
-
-1. **Add Feature:** Add a missing feature (see `TODO-BUG-666.md`).
-2. **Technical Debt Fix:** Diagnose and fix unnecessary React component re-renders (see `TODO-FIX-TECH-DEBT.md`).
-3. **New Feature:** Build a new transaction grid with tags, server-side sorting, and pagination (see `TODO-TAG-FEATURE.md`).
-4. **Advanced Hook:** Create a reusable custom hook for data grid state management (see `TODO-HOOK-DATAGRID.md`).
-
----
-
-1.  **Clone Your Fork:** Clone your newly forked repository to your local machine.
-2.  **Choose Your Development Environment:** Pick one of the two options below.
-
-#### Option 1: VS Code Dev Container (Recommended)
-
-This option provides a complete, isolated development environment with all dependencies pre-configured.
-
-1.  **Prerequisites:** Install [Docker Desktop](https://www.docker.com/products/docker-desktop) and [VS Code](https://code.visualstudio.com/) with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-2.  **Open in VS Code:** Open the repository folder in VS Code.
-3.  **Reopen in Container:** When prompted, click "Reopen in Container" (or use Command Palette → "Dev Containers: Reopen in Container").
-4.  **Wait for Setup:** The container will build (first time takes ~2 minutes).
-5.  **Launch Services:** Once inside the container, open a terminal and run:
-    ```bash
-    ./run.sh
-    ```
-    This configures the frontend to connect to the backend via `localhost` (required for browser access).
-6.  **Explore:** Open `http://localhost:3000` in your browser to see the frontend. The backend API is at `http://localhost:8000`.
-
-#### Option 2: Running from Your Host Machine
-
-If you prefer not to use dev containers:
-
-1.  **Prerequisites:** Install [Docker Desktop](https://www.docker.com/products/docker-desktop).
-2.  **Launch the Application:** From the repository root, run:
-    ```bash
-    ./run.sh
-    ```
-    This script configures the services and runs in foreground mode showing logs.
-3.  **Explore:** Open `http://localhost:3000` in your browser to see the frontend. The backend API is at `http://localhost:8000`.
-4.  **Stop Services:** Press `Ctrl+C` to stop (cleanup happens automatically).
-
-**Note:** All environment variables have sensible defaults. You don't need to create a `.env` file unless you want to customize settings (see `.env.example` for reference).
-
-**Security Note:** This exercise uses hardcoded database credentials (e.g., `fintech_password`) for convenience. This is acceptable for a local development exercise but is **NOT a recommended practice for production environments**. In production, always use secure secret management solutions (e.g., AWS Secrets Manager, Azure Key Vault, HashiCorp Vault) and never commit credentials to version control.
-
-### Running Tests
-
-We have set up a comprehensive testing suite for this project. A helper script is provided to run all tests and install any necessary dependencies automatically.
-
-From the root of the repository, run the test script:
-```bash
-./run-tests.sh
-```
-This will execute the backend tests (unit, integration, E2E) and the frontend Playwright E2E tests.
-
-**Note:** Both `run-tests.sh` and `run.sh` automatically clean up Docker containers and volumes when they start and when you stop them (Ctrl+C), ensuring a clean state. You can also run linting with `./run-lint.sh`.
-
-### PR #1: Add Missing Feature
-
-Your first task is to act as a mentor and review a "PR" from a junior developer.
-
-1.  **Understand the Context:** Read the `TODO-BUG-666.md` file to understand the original problem.
-2.  **Create a Branch:** Create a branch, `fix-bug-666` from your `main` branch. Use the PR description template below.
-2.  **Add the Feature:** Implement the missing feature as described in the `TODO-BUG-666.md` file.
-3.  **Open the PR:**
-    *   Open a new pull request in your repository from `fix-bug-666` to `main`.
-    *   Use the PR description template below.
-    *   **Leave this pull request open** for us to review.
-   
-#### PR #1 Description Template
-```md
-### What I Did
-This PR fixes the transaction display bug by filtering transactions on the frontend to only show relevant entries. I've also implemented server-side pagination for better performance.
-
-### How to Test
-1. Checkout this branch.
-2. Run `docker compose up --build`.
-3. Navigate to the frontend at `http://localhost:3000`.
-4. Observe that only relevant transactions are displayed.
-5. Verify that pagination controls are now active and functional.
-
-### Architectural Decision Record (ADR)
-To address the display bug, I decided to handle filtering directly in the frontend component. This approach simplifies the backend and leverages the client's processing power for a snappier user experience. For pagination, I added a new `GET` parameter `page` and `page_size` to the existing `/api/v1/transactions/` endpoint, and updated the frontend to send these parameters.
-
-### AI Usage Summary
-I used AI tools for minor code refactoring and to generate some boilerplate for the frontend pagination component.
-```
-
-### PR #2: Fixing Technical Debt
-
-Now, it's time to fix the *other* bugs lurking in the `main` branch.
-
-1.  **Create a Branch:** From your `main` branch, create a new branch. We suggest `fix/haunted-codebase`.
-2.  **Hunt the Bugs:** Read the ticket `TODO-FIX-TECH-DEBT.md` for a description of the bugs to be fixed.
-3.  **Open the PR:**
-    *   Open a new pull request in your repository from `fix/haunted-codebase` to `main`.
-    *   Use the PR description template below.
-    *   **Leave this pull request open** for us to review.
-
-### PR #3: New Feature Development (Stacked PR)
-
-With the codebase stabilized, you can now build the new feature. This PR will be "stacked" on top of PR #2, meaning it builds directly on the changes made in `fix/haunted-codebase`.
-
-1.  **Create a Branch:** From your `fix/haunted-codebase` branch, create a new branch. We suggest `feature/transaction-tags-grid`.
-    *   *Note: Because this is a "stacked" PR, you will see the commits from your `fix/haunted-codebase` branch also included in this pull request. This is expected.*
-
-2.  **Build the Feature:** Read the ticket `TODO-TAG-FEATURE.md` for the full feature requirements.
-
-3.  **Open the PR:**
-    *   Open a new pull request from `feature/transaction-tags-grid` to your `main` branch.
-    *   Use the PR description template below. In your description, please explicitly mention that this PR builds on `fix/haunted-codebase` and link to PR #2.
-    *   **Leave this pull request open** for us to review.
-
-### PR #4: Advanced Hook (Custom Data Grid State Hook)
-
-For your final task, you will design and implement a reusable custom React hook for data grid state management.
-
-1. **Create a Branch:** From your `main` branch, create a new branch. We suggest `feature/datagrid-hook`.
-2. **Build the Hook:** Read the ticket `TODO-HOOK-DATAGRID.md` for the full requirements.
-3. **Open the PR:**
-    *   Open a new pull request from `feature/datagrid-hook` to your `main` branch.
-    *   Use the PR description template below.
-    *   **Leave this pull request open** for us to review.
-
-## The Deliverable
-
-The final deliverable is **a link to your forked repository.** When you submit it, we expect to see the following:
-
-*   **PR #1 (Missing Feature):** An **open** (but not merged) pull request from `fix-bug-666` to `main`, containing your implementation of the missing feature.
-*   **PR #2 (Technical Debt Fix):** An **open** pull request from `fix/haunted-codebase` to `main`, containing your React performance improvements.
-*   **PR #3 (New Feature):** An **open** pull request from `feature/transaction-tags-grid` to `main`, containing your new transaction grid and tags feature. This PR will implicitly include the commits from PR #2 as its base.
-*   **PR #4 (Advanced Hook):** An **open** pull request from `feature/datagrid-hook` to `main`, containing your custom data grid state hook implementation.
-
-### PR Description Template for PRs
-
-For PRs #2, #3, and #4, please use this template:
-
-```md
-### What I Did
-(A brief summary of the changes in this PR.)
-
-### Depends On
-(If this PR builds on another, like PR #3 builds on PR #2, link it here.)
-
-### How to Test
-(Clear instructions on how to test the changes in this PR.)
-
-### Architectural Decision Record (ADR)
-(A short explanation of significant decisions. For PR #3, this should cover state management and grid architecture.)
-
-### AI Usage Summary
-(A high-level summary of how you used AI tools.)
-```
-
----
-
-Good luck, and have fun! We're excited to see your work.
+Cheers 🍻
