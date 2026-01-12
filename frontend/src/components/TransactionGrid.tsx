@@ -103,12 +103,20 @@ const TransactionGrid: React.FC = () => {
           Transaction Grid
         </h2>
       </header>
+      <div aria-live="polite" className="sr-only">
+        Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, total)} of {total}{' '}
+        transactions, sorted by {sortBy} {sortOrder}
+      </div>
       <div className="border-t border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
+          <caption className="sr-only">Transaction list with sorting and pagination</caption>
           <thead className="bg-gray-50">
             <tr>
               <th
                 scope="col"
+                aria-sort={
+                  sortBy === 'date' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'
+                }
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 <button onClick={() => handleSort('date')} className="w-full hover:text-gray-700">
@@ -123,6 +131,9 @@ const TransactionGrid: React.FC = () => {
               </th>
               <th
                 scope="col"
+                aria-sort={
+                  sortBy === 'amount' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'
+                }
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 <button onClick={() => handleSort('amount')} className="w-full hover:text-gray-700">
@@ -191,6 +202,7 @@ const TransactionGrid: React.FC = () => {
           <div className="flex gap-2">
             <button
               onClick={handlePreviousPage}
+              aria-label="Go to previous page"
               disabled={!canGoPrevious}
               className={`px-3 py-1.5 text-xs font-medium rounded border ${
                 canGoPrevious
@@ -202,6 +214,7 @@ const TransactionGrid: React.FC = () => {
             </button>
             <button
               onClick={handleNextPage}
+              aria-label="Go to next page"
               disabled={!canGoNext}
               className={`px-3 py-1.5 text-xs font-medium rounded border ${
                 canGoNext
