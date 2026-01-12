@@ -94,10 +94,15 @@ const TransactionGrid: React.FC = () => {
   }
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg mt-8">
-      <div className="px-4 py-5 sm:px-6 text-left">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">Transaction Grid</h3>
-      </div>
+    <section
+      aria-labelledby="transaction-grid-title"
+      className="bg-white shadow overflow-hidden sm:rounded-lg mt-8"
+    >
+      <header className="px-4 py-5 sm:px-6 text-left">
+        <h2 id="transaction-grid-title" className="text-lg leading-6 font-medium text-gray-900">
+          Transaction Grid
+        </h2>
+      </header>
       <div className="border-t border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -177,37 +182,39 @@ const TransactionGrid: React.FC = () => {
           </tbody>
         </table>
       </div>
-      <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200 bg-white">
-        <div className="text-sm text-gray-500">
-          Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, total)} of {total}{' '}
-          results
+      <footer>
+        <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200 bg-white">
+          <div className="text-sm text-gray-500">
+            Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, total)} of {total}{' '}
+            results
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={handlePreviousPage}
+              disabled={!canGoPrevious}
+              className={`px-3 py-1.5 text-xs font-medium rounded border ${
+                canGoPrevious
+                  ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                  : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNextPage}
+              disabled={!canGoNext}
+              className={`px-3 py-1.5 text-xs font-medium rounded border ${
+                canGoNext
+                  ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                  : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              Next
+            </button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handlePreviousPage}
-            disabled={!canGoPrevious}
-            className={`px-3 py-1.5 text-xs font-medium rounded border ${
-              canGoPrevious
-                ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
-                : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            Previous
-          </button>
-          <button
-            onClick={handleNextPage}
-            disabled={!canGoNext}
-            className={`px-3 py-1.5 text-xs font-medium rounded border ${
-              canGoNext
-                ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
-                : 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
-            }`}
-          >
-            Next
-          </button>
-        </div>
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 };
 
