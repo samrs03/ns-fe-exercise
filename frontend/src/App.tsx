@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header';
 import TransactionList from './components/TransactionList';
@@ -6,10 +6,10 @@ import TransactionList from './components/TransactionList';
 function App() {
   const [userActivityCount, setUserActivityCount] = useState(0);
 
-  const handleUserProfileClick = () => {
-    console.log("User profile clicked!");
-    setUserActivityCount(prev => prev + 1);
-  };
+  const handleUserProfileClick = useCallback(() => {
+    console.log('User profile clicked!');
+    setUserActivityCount((prev) => prev + 1);
+  }, []);
 
   return (
     <div className="App min-h-screen bg-gray-100 flex flex-col">
