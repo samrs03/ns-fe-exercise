@@ -15,8 +15,11 @@ interface Transaction {
 
 const TransactionList: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const filterOptions = ['all', 'credit', 'debit'];
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -39,6 +42,11 @@ const TransactionList: React.FC = () => {
     fetchTransactions();
   }, []);
 
+  const filteredTransactions = transactions.filter((t) => {
+    if (selectedFilter === 'all') return true;
+    return t.type === selectedFilter;
+  });
+
   if (loading) {
     return <div className="text-gray-700">Loading transactions...</div>;
   }
@@ -49,30 +57,79 @@ const TransactionList: React.FC = () => {
 
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg mt-8">
-      <div className="px-4 py-5 sm:px-6">
+      <div className="px-4 py-5 sm:px-6 text-left">
         <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Transactions</h3>
+
+        <div className="mt-3 inline-flex rounded-md shadow-sm">
+          {filterOptions.map((option, idx) => (
+            <button
+              key={option}
+              onClick={() => setSelectedFilter(option)}
+              className={`px-3 py-1.5 text-xs font-medium border border-gray-300
+        ${idx === 0 ? 'rounded-l-md' : ''} 
+        ${idx === filterOptions.length - 1 ? 'rounded-r-md' : ''} 
+        ${idx !== 0 ? '-ml-px' : ''}
+        ${
+          selectedFilter === option
+            ? 'bg-blue-500 text-white'
+            : 'bg-white text-gray-700 hover:bg-gray-50'
+        }`}
+            >
+              {option.charAt(0).toUpperCase() + option.slice(1)}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="border-t border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[15%]">Date</th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]">Type</th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[20%]">Category</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[35%]">Description</th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[20%]">Amount</th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[15%]"
+              >
+                Date
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]"
+              >
+                Type
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[20%]"
+              >
+                Category
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[35%]"
+              >
+                Description
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[20%]"
+              >
+                Amount
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {transactions.map((transaction, index) => (
+            {filteredTransactions.map((transaction, index) => (
               <tr key={transaction.id} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                   {new Date(transaction.date).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <span className={`px-2 inline-flex justify-center text-center text-xs leading-5 font-semibold rounded-full ${
-                    transaction.type === 'credit' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                  }`}>
+                  <span
+                    className={`px-2 inline-flex justify-center text-center text-xs leading-5 font-semibold rounded-full ${
+                      transaction.type === 'credit'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
                     {transaction.type}
                   </span>
                 </td>
@@ -87,9 +144,11 @@ const TransactionList: React.FC = () => {
                 </td>
               </tr>
             ))}
-            {transactions.length === 0 && (
+            {filteredTransactions.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-6 py-4 text-center text-gray-500">No transactions found.</td>
+                <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                  No transactions found.
+                </td>
               </tr>
             )}
           </tbody>
